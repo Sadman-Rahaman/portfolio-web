@@ -1,0 +1,362 @@
+@import "tailwindcss";
+
+/*
+  Design tokens for the "Lab notebook" direction.
+  Every value here comes from the landing page design skill (Part B) and the
+  approved strategy doc. See DECISIONS.md before changing anything.
+*/
+
+/* ---------- Colour tokens ----------
+   Version 2 (7 Nov 2026), modelled on the reference Sadman supplied:
+   warm off white paper, deep green accent, one dark green band.
+   Light is the default; dark follows the system or the footer switch. */
+
+:root {
+  --bg: #f4f4ef;
+  --surface: #fafaf7;
+  --surface-raised: #ecece5;
+  --line: #d9d9d0;
+  --text: #17201b;
+  --text-muted: #59625d;
+  --accent: #1e4d3a;
+  --on-accent: #f4f4ef;
+  --band: #12332a;
+  --on-band: #f4f4ef;
+  --on-band-muted: #b9c7bf;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131209;
+    --surface: #1f1f1f;
+    --surface-raised: #181818;
+    --line: #313131;
+    --text: #edebe4;
+    --text-muted: #a3a39b;
+    --accent: #8fc4a8;
+    --on-accent: #131209;
+    --band: #1f1f1f;
+    --on-band: #edebe4;
+    --on-band-muted: #a3a39b;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #131209;
+  --surface: #1f1f1f;
+  --surface-raised: #181818;
+  --line: #313131;
+  --text: #edebe4;
+  --text-muted: #a3a39b;
+  --accent: #8fc4a8;
+  --on-accent: #131209;
+  --band: #1f1f1f;
+  --on-band: #edebe4;
+  --on-band-muted: #a3a39b;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--line);
+  --color-fg: var(--text);
+  --color-fg-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-on-fg: var(--bg);
+  --color-band: var(--band);
+  --color-on-band: var(--on-band);
+  --color-on-band-muted: var(--on-band-muted);
+
+  /* Fixed light ground for third party logos, the same in both themes */
+  --color-plate: #fafaf7;
+
+  /* Serif for headings and display numbers (reference), Geist for everything else */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  /* Layout widths: page 1040px like the reference, hero copy 680px, running text about 65ch */
+  --container-page: 65rem;
+  --container-hero: 42.5rem;
+  --container-prose: 40rem;
+
+  /* B7 base curve */
+  --ease-base: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Named text styles (skill B1) ----------
+   Each style maps to one Tailwind type scale step and its paired line height.
+   Use these classes instead of loose size and weight utilities.
+   Body 7 (18/28 regular) and Body 8 (20/28 serif) are project additions.
+   Headings use the serif at regular weight (reference), on the same scale steps. */
+
+@utility heading-1 {
+  font-size: var(--text-6xl);
+  line-height: var(--text-6xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+@utility heading-2 {
+  font-size: var(--text-5xl);
+  line-height: var(--text-5xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+@utility heading-3 {
+  font-size: var(--text-4xl);
+  line-height: var(--text-4xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+@utility heading-4 {
+  font-size: var(--text-3xl);
+  line-height: var(--text-3xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+@utility heading-5 {
+  font-size: var(--text-2xl);
+  line-height: var(--text-2xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+@utility heading-6 {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  font-family: var(--font-serif);
+  font-weight: var(--font-weight-normal);
+}
+
+@utility title-1 {
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility title-2 {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility title-3 {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility title-4 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility title-5 {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-medium);
+}
+
+@utility body-1 {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility body-2 {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility body-3 {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-normal);
+}
+@utility body-4 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility body-5 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility body-6 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-normal);
+}
+@utility body-7 {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+/* Body 8: serif lead paragraph (text-xl, 20/28), a project addition for the reference look */
+@utility body-8 {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+@utility button-lg {
+  font-size: var(--text-lg);
+  line-height: var(--text-lg--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility button-md {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility button-sm {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility button-xsm {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+
+@utility caption-1 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility caption-2 {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-normal);
+}
+@utility caption-3 {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+@utility caption-4 {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-medium);
+}
+@utility caption-5 {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+/* ---------- Motion (skill B7) ---------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Load entrance for above-the-fold content. Delay comes from --enter-delay. */
+@utility enter {
+  animation: rise-in 700ms var(--ease-base) both;
+  animation-delay: var(--enter-delay, 0ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: fade-in;
+  }
+}
+
+/* Scroll reveal (skill B7): rise 32px and fade in, once. Only hidden when JS is running,
+   so the page stays readable if scripts fail. RevealObserver sets data-revealed. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 700ms var(--ease-base),
+    transform 700ms var(--ease-base);
+}
+.js [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    transform: none;
+  }
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  html {
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* No orphaned words (skill B1) */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  dd,
+  figcaption,
+  blockquote {
+    text-wrap: pretty;
+  }
+
+  /* No italics anywhere (skill B1) */
+  em,
+  i,
+  cite,
+  address {
+    font-style: normal;
+  }
+
+  /* Visible focus ring on every interactive element (skill B9) */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* On the dark green band the accent ring would disappear */
+  [data-tone="band"] :focus-visible {
+    outline-color: var(--on-band);
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
